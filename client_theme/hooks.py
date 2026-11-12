@@ -319,13 +319,5 @@ website_context = {
 	"splash_image": "/assets/client_theme/images/logo-mark-clean.svg",
 }
 
-# Email footer appended to every outgoing system email.
-# The standard Frappe footer ("Sent by Frappe Framework") is disabled in branding.py.
-default_mail_footer = [
-	"<div style='color:#888;font-size:11px;margin-top:8px;'>"
-	"Sent by <strong>B-One</strong> &mdash; B-Core Digital Services"
-	"</div>"
-]
-
 after_install = "client_theme.branding.apply_branding"
 after_migrate = ["client_theme.branding.apply_branding"]

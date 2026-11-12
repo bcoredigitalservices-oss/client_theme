@@ -297,8 +297,8 @@
 	// (frappe.io, erpnext/templates, frappe.utils) are left alone. To switch it off, remove `until(install_scrubber)` below.
 	const SCRUB_TEST = /(?<![\w./@\-])(erpnext|frappe)(?![\w./@\-])/i;
 	const SCRUB_RE = /(?<![\w./@\-])(erpnext|frappe)(?![\w./@\-])/gi;
-	const SCRUB_ZONES = ".modal, .dropdown-menu, .popover, .page-head, .body-sidebar, .dock, .control-label, .help-box, .form-message, .section-head, .empty-state, .msgprint, .es-toast-container, .desktop-container, .page-title, .sidebar-item-label";
-	const SCRUB_SKIP = "input, textarea, pre, code, script, style, .ql-editor, .CodeMirror, .ace_editor, [contenteditable='true'], .list-row, .grid-static-col, .control-value";
+	const SCRUB_ZONES = ".modal, .dropdown-menu, .popover, .body-sidebar, .dock, .control-label, .help-box, .form-message, .section-head, .empty-state, .msgprint, .es-toast-container, .desktop-container, .sidebar-item-label";
+	const SCRUB_SKIP = "input, textarea, select, option, pre, code, script, style, .ql-editor, .CodeMirror, .ace_editor, [contenteditable='true'], .list-row, .grid-static-col, .control-value, .awesomplete, [role='listbox'], .link-field";
 
 	function scrub_text(n) {
 		const v = n.nodeValue;

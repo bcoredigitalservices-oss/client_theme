@@ -1,5 +1,6 @@
 app_name = "client_theme"
-app_title = "Client Theme"
+app_title = "B-One"
+app_logo_url = "/assets/client_theme/images/logo-mark-clean.svg"
 app_publisher = "B-Core Digital"
 app_description = "Theme app by B-Core Digital"
 app_email = "bcoredigitalservices@gmail.com"
@@ -307,3 +308,24 @@ require_type_annotated_api_methods = True
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
 
+# Custom Theme Assets
+app_include_css = ["whitelabel.bundle.css", "b_one_desk.bundle.css", "/assets/client_theme/css/b_one_fonts.css"]
+web_include_css = "whitelabel.bundle.css"
+app_include_js = "whitelabel.bundle.js"
+extend_bootinfo = ["client_theme.boot.extend_bootinfo"]
+
+website_context = {
+	"favicon": "/assets/client_theme/images/logo-mark-clean.svg",
+	"splash_image": "/assets/client_theme/images/logo-mark-clean.svg",
+}
+
+# Email footer appended to every outgoing system email.
+# The standard Frappe footer ("Sent by Frappe Framework") is disabled in branding.py.
+default_mail_footer = [
+	"<div style='color:#888;font-size:11px;margin-top:8px;'>"
+	"Sent by <strong>B-One</strong> &mdash; B-Core Digital Services"
+	"</div>"
+]
+
+after_install = "client_theme.branding.apply_branding"
+after_migrate = ["client_theme.branding.apply_branding"]

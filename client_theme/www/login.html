@@ -1,0 +1,178 @@
+{% from "templates/includes/login/macros.html" import alert_banner %}
+{% extends "templates/web.html" %}
+{% block navbar %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block footer %}{% endblock %}
+{% block head_include %}<link rel="stylesheet" href="/assets/client_theme/css/b_one_fonts.css">{{ include_style('b_one_login.bundle.css') }}{% endblock %}
+
+{% macro head(title, sub) %}
+<div class="b1-card-head"><h2>{{ title }}</h2><p>{{ sub }}</p></div>
+{% endmacro %}
+
+{% macro login_body() -%}
+{% if not disable_user_pass_login or (ldap_settings and ldap_settings.enabled) %}
+<div class="page-card-body">
+	{{ alert_banner("error") }}
+	<div class="form-group">
+		<label for="login_email">{{ login_label or _("Email") }}</label>
+		<input type="text" id="login_email" class="form-control" placeholder="{{ _('jane@example.com') }}" required autofocus autocomplete="username">
+		<p class="field-error" aria-live="polite"></p>
+	</div>
+	<div class="form-group">
+		<label for="login_password">{{ _("Password") }}</label>
+		<div class="password-field">
+			<input type="password" id="login_password" class="form-control" placeholder="••••••••" autocomplete="current-password" required>
+			<button type="button" class="toggle-password" toggle="#login_password" aria-label="{{ _('Show password') }}" aria-pressed="false">
+				<svg class="icon icon-sm" aria-hidden="true"><use href="#icon-eye"></use></svg>
+			</button>
+		</div>
+		<p class="field-error" aria-live="polite"></p>
+		{% if not disable_user_pass_login %}<a class="b1-forgot" href="#forgot">{{ _("Forgot password?") }}</a>{% endif %}
+	</div>
+</div>
+{% endif %}
+<div class="page-card-actions">
+	{% if not disable_user_pass_login %}<button class="es-button" data-variant="solid" type="submit">{{ _("Sign in") }}</button>{% endif %}
+	{% if ldap_settings and ldap_settings.enabled %}<button class="es-button btn-ldap-login" data-variant="solid" type="button">{{ _("Login with LDAP") }}</button>{% endif %}
+	{% if login_with_email_link %}<a href="#login-with-email-link" class="es-button btn-login-option btn-login-with-email-link">{{ _("Login with Email Link") }}</a>{% endif %}
+	{% if social_login %}
+	<div class="social-login-buttons">
+		{% for provider in provider_logins %}
+		<a href="{{ provider.auth_url }}" class="es-button btn-login-option btn-{{ provider.name }}">{% if provider.icon %}{{ provider.icon }}{% endif %}{{ _("Login with {0}").format(provider.provider_name) }}</a>
+		{% endfor %}
+	</div>
+	{% endif %}
+</div>
+{%- endmacro %}
+
+{% macro no_account() -%}
+<p class="sign-up-message">
+	{%- if not disable_signup and not disable_user_pass_login -%}
+	{{ _("Don't have an account?") }} <a href="#signup">{{ _("Sign up") }}</a>
+	{%- else -%}{{ _("Need access? Contact your administrator.") }}{%- endif -%}
+</p>
+{%- endmacro %}
+
+{% block page_content %}
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="m-fin" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></symbol>
+<symbol id="m-inv" viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></symbol>
+<symbol id="m-hr" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.3c2.2.7 3.5 2.6 3.5 5.7"/></symbol>
+<symbol id="m-crm" viewBox="0 0 24 24"><path d="M3 4h18l-7 8.5V19l-4 2v-8.5z"/></symbol>
+<symbol id="m-pro" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a1 1 0 0 0 1 .8h9.2a1 1 0 0 0 1-.8L21 7H6"/></symbol>
+<symbol id="m-man" viewBox="0 0 24 24"><path d="M3 21V10l6 4V10l6 4V5h4a2 2 0 0 1 2 2v14z"/><path d="M3 21h18M8 17h.01M12 17h.01M16 17h.01"/></symbol>
+<symbol id="m-ai" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></symbol>
+<symbol id="m-ana" viewBox="0 0 24 24"><path d="M3 3v18h18M8 17v-5M13 17V8M18 17v-9"/></symbol>
+<symbol id="m-flt" viewBox="0 0 24 24"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8"/><circle cx="6.5" cy="18" r="2"/><circle cx="17.5" cy="18" r="2"/></symbol>
+<symbol id="m-prj" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 7v7M12 7v10M16 7v4"/></symbol>
+<symbol id="b1-w" viewBox="0 0 2880 320" preserveAspectRatio="none"><path d="M0 160Q360 60 720 160T1440 160T2160 160T2880 160V320H0Z"/></symbol>
+</defs></svg>
+
+<div class="b1">
+	<div class="b1-bg" aria-hidden="true">
+		<i class="b1-aur a1"></i><i class="b1-aur a2"></i><i class="b1-aur a3"></i><i class="b1-grid"></i>
+		<svg class="b1-wave w1" viewBox="0 0 2880 320" preserveAspectRatio="none"><use href="#b1-w"/></svg>
+		<svg class="b1-wave w2" viewBox="0 0 2880 320" preserveAspectRatio="none"><use href="#b1-w"/></svg>
+		<svg class="b1-wave w3" viewBox="0 0 2880 320" preserveAspectRatio="none"><use href="#b1-w"/></svg>
+	</div>
+
+	<div class="b1-shell">
+		<header class="b1-head">
+			<div class="b1-logos">
+				<img src="/assets/client_theme/images/logo-mark.svg" alt="B-One" width="33" height="40">
+				<span class="b1-brand"><b>B-One</b><small>by B-Core Digital</small></span>
+				<i class="b1-sep"></i>
+				<img src="/assets/client_theme/images/loyson.png" alt="Loyson Groups" width="111" height="40">
+			</div>
+			<ul class="b1-trust"><li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Secure</li><li><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Reliable</li><li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 21V5l8-2 8 2v16"/><path d="M9 21v-4h6v4M8 9h.01M12 9h.01M16 9h.01M8 13h.01M12 13h.01M16 13h.01"/></svg>Enterprise-ready</li></ul>
+		</header>
+
+		<main class="b1-main">
+			<div class="b1-cardcol">
+				<section class="for-login"><div class="login-content page-card">
+					{{ head(_('Welcome back'), _('Sign in to continue to B-One.')) }}
+					<form class="form-signin form-login" role="form" novalidate>{{ login_body() }}</form>
+					{{ no_account() }}
+				</div></section>
+
+				{%- if social_login -%}
+				<section class="for-email-login"><div class="login-content page-card">
+					{{ head(_('Welcome back'), _('Sign in to continue to B-One.')) }}
+					<form class="form-signin form-login" role="form" novalidate>{{ login_body() }}</form>
+					{{ no_account() }}
+				</div></section>
+				{%- endif -%}
+
+				<section class="for-signup {{ 'signup-disabled' if disable_signup else '' }}"><div class="login-content page-card">
+					{{ head(_('Create your account'), _("Let's set up your access.")) }}
+					{%- if not disable_signup -%}{{ signup_form_template }}{%- else -%}
+					<p class="sign-up-message">{{ _("Signups have been disabled for this website.") }}</p>
+					<a href="/" class="es-button" data-variant="solid">{{ _("Home") }}</a>
+					{%- endif -%}
+				</div></section>
+
+				<section class="for-forgot"><div class="login-content page-card">
+					{{ head(_('Reset your password'), _("Enter your email and we'll send a reset link.")) }}
+					<form class="form-signin form-forgot hide" role="form" novalidate>
+						<div class="page-card-body">
+							{{ alert_banner("success") }}{{ alert_banner("error") }}
+							<div class="form-group">
+								<label for="forgot_email">{{ _("Email") }}</label>
+								<input type="email" id="forgot_email" class="form-control" placeholder="{{ _('jane@example.com') }}" required autofocus autocomplete="username">
+								<p class="field-error" aria-live="polite"></p>
+							</div>
+						</div>
+						<div class="page-card-actions"><button class="es-button btn-forgot" data-variant="solid" type="submit" disabled>{{ _("Send link") }}</button></div>
+					</form>
+					<p class="sign-up-message"><a href="#login">{{ _("Back to sign in") }}</a></p>
+				</div></section>
+
+				<section class="for-login-with-email-link"><div class="login-content page-card">
+					{{ head(_('Email sign-in link'), _("We'll email you a one-time link.")) }}
+					<form class="form-signin form-login-with-email-link hide" role="form" novalidate>
+						<div class="page-card-body">
+							{{ alert_banner("success") }}{{ alert_banner("error") }}
+							<div class="form-group">
+								<label for="login_with_email_link_email">{{ _("Email") }}</label>
+								<input type="email" id="login_with_email_link_email" class="form-control" placeholder="{{ _('jane@example.com') }}" required autofocus autocomplete="username">
+								<p class="field-error" aria-live="polite"></p>
+							</div>
+						</div>
+						<div class="page-card-actions">
+							<p class="resend-link hidden">{{ _("Didn't receive the link?") }} <a href="#" class="btn-resend-link">{{ _("Resend") }}</a></p>
+							<button class="es-button btn-login-with-email-link" data-variant="solid" type="submit">{{ _("Send login link") }}</button>
+							<a href="#login" class="es-button btn-login-option">{{ _("Login with password") }}</a>
+						</div>
+					</form>
+				</div></section>
+			</div>
+
+			<section class="b1-hero" aria-label="B-One">
+				<h1 class="b1-sr">B-One business platform</h1>
+				<div class="b1-slides" id="b1-slides">
+					<div class="b1-slide s1 is-on"><p class="b1-h">Your vision.<br><em class="b1-g">Our core.</em></p><p class="b1-sub">One intelligent platform for finance, operations, people and growth.</p></div>
+					<div class="b1-slide s2"><p class="b1-h">Where vision meets<br><span class="b1-g">the core.</span></p><p class="b1-sub">Every module, one connected workspace.</p></div>
+					<div class="b1-slide s3"><p class="b1-h">Built around<br><span class="b1-g">your vision.</span></p><p class="b1-sub">Finance, operations and people, working as one.</p></div>
+					<div class="b1-slide s4"><p class="b1-h">Precision at the core.<br><em class="b1-g">Growth beyond it.</em></p><p class="b1-sub">The business platform that keeps every team in step.</p></div>
+				</div>
+				<div class="b1-dots" role="group" aria-label="Headline messages"><button type="button" aria-label="Message 1" aria-current="true"></button><button type="button" aria-label="Message 2"></button><button type="button" aria-label="Message 3"></button><button type="button" aria-label="Message 4"></button></div>
+				<div class="b1-car" id="b1-car"><ul class="b1-trk" id="b1-trk">
+					{%- for id, label, desc in [('fin','Finance','Ledgers, billing, compliance'),('inv','Inventory','Stock across every warehouse'),('hr','HR & Payroll','People, attendance, pay'),('crm','CRM & Sales','Leads to closed deals'),('pro','Procurement','Sourcing to supplier payment'),('man','Manufacturing','Plan, build, track output'),('ai','AI Automation','Smart workflows, fewer clicks'),('ana','Analytics','Live dashboards and reports'),('flt','Fleet Management','Vehicles, routes, upkeep'),('prj','Project Management','Plans, tasks, delivery')] -%}
+					<li class="b1-pill"><span class="b1-chip"><svg class="b1-ico" aria-hidden="true"><use href="#m-{{ id }}"/></svg></span><span class="b1-pt"><b>{{ label }}</b><small>{{ desc }}</small></span></li>
+					{%- endfor -%}
+				</ul></div>
+			</section>
+		</main>
+
+		<footer class="b1-foot"><span>Powered by <b>B-Core Digital</b></span><span>Smarter solutions. A stronger tomorrow.</span></footer>
+	</div>
+</div>
+{% endblock %}
+
+{% block script %}
+{% set core_login_js %}{% include "templates/includes/login/login.js" %}{% endset %}
+<script>
+{{ core_login_js | safe }}
+</script>
+{{ include_script('b_one_login.bundle.js') }}
+{% endblock %}

@@ -1,0 +1,822 @@
+/* B-One login, "Ice light" palette. Scoped to .b1 so nothing leaks into the rest of the site. */
+.b1 {
+    --ink: #0A1F44;
+    --mut: #51638A;
+    --acc: #1D4ED8;
+    --cy: #06B6D4;
+    --line: #CFDDF2;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    overflow: auto;
+    color: var(--ink);
+    background: #EAF2FD;
+    font-family: Inter, "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.5
+}
+
+.b1 *,
+.b1 *::before,
+.b1 *::after {
+    box-sizing: border-box
+}
+
+.b1 .hidden,
+.b1 .hide {
+    display: none !important
+}
+
+.b1 a {
+    color: var(--acc)
+}
+
+.b1 h1,
+.b1 h2,
+.b1 p,
+.b1 ul {
+    margin: 0;
+    padding: 0
+}
+
+.b1 h1,
+.b1 h2 {
+    color: var(--ink)
+}
+
+/* Background: ice gradient, pastel aurora, fine grid, three SVG wave layers */
+.b1-bg {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background: linear-gradient(180deg, #F6F9FE 0%, #E6EFFC 100%)
+}
+
+.b1-aur {
+    position: absolute;
+    width: 64vmax;
+    height: 64vmax;
+    border-radius: 50%;
+    will-change: transform
+}
+
+.a1 {
+    left: -20vmax;
+    top: -30vmax;
+    background: radial-gradient(closest-side, rgba(6, 182, 212, .26), transparent);
+    animation: b1-a 26s ease-in-out infinite
+}
+
+.a2 {
+    right: -22vmax;
+    top: -8vmax;
+    background: radial-gradient(closest-side, rgba(59, 130, 246, .24), transparent);
+    animation: b1-a 32s ease-in-out -9s infinite reverse
+}
+
+.a3 {
+    left: 25%;
+    bottom: -38vmax;
+    background: radial-gradient(closest-side, rgba(29, 78, 216, .12), transparent);
+    animation: b1-a 38s ease-in-out -15s infinite
+}
+
+.b1-grid {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(29, 78, 216, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(29, 78, 216, .06) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse at 60% 30%, #000 10%, transparent 70%);
+    mask-image: radial-gradient(ellipse at 60% 30%, #000 10%, transparent 70%)
+}
+
+.b1-wave {
+    position: absolute;
+    left: 0;
+    width: 200%;
+    will-change: transform
+}
+
+.w1 {
+    bottom: -3vh;
+    height: 40vh;
+    fill: rgba(29, 78, 216, .10);
+    animation: b1-w 64s linear infinite
+}
+
+.w2 {
+    bottom: -6vh;
+    height: 32vh;
+    fill: rgba(6, 182, 212, .14);
+    animation: b1-w 44s linear infinite
+}
+
+.w3 {
+    bottom: -8vh;
+    height: 24vh;
+    fill: rgba(29, 78, 216, .09);
+    animation: b1-w 30s linear infinite
+}
+
+@keyframes b1-w {
+    to {
+        transform: translate3d(-50%, 0, 0)
+    }
+}
+
+@keyframes b1-a {
+    50% {
+        transform: translate3d(9%, 8%, 0) scale(1.15)
+    }
+}
+
+.b1.is-paused .b1-bg * {
+    animation-play-state: paused
+}
+
+@media (prefers-reduced-motion:reduce) {
+    .b1-bg * {
+        animation: none !important
+    }
+}
+
+/* Layout */
+.b1-shell {
+    position: relative;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    padding: 0 clamp(18px, 4vw, 56px)
+}
+
+.b1-head,
+.b1-main,
+.b1-foot {
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto
+}
+
+.b1-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 30px 0 8px
+}
+
+.b1-logos {
+    display: flex;
+    align-items: center;
+    gap: 16px
+}
+
+.b1-logos img {
+    height: 42px;
+    width: auto;
+    display: block
+}
+
+.b1-brand {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1
+}
+
+.b1-brand b {
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -.01em
+}
+
+.b1-brand small {
+    font-size: .7rem;
+    font-weight: 600;
+    color: var(--mut)
+}
+
+.b1-sep {
+    width: 1px;
+    height: 36px;
+    background: var(--line)
+}
+
+.b1-trust {
+    display: flex;
+    gap: 10px;
+    list-style: none
+}
+
+.b1-trust li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px 7px 10px;
+    border-radius: 999px;
+    font-size: .84rem;
+    font-weight: 600;
+    color: var(--ink);
+    background: rgba(255, 255, 255, .7);
+    border: 1px solid rgba(255, 255, 255, .95);
+    box-shadow: 0 1px 2px rgba(10, 31, 68, .06)
+}
+
+.b1-trust svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: var(--acc);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round
+}
+
+.b1-main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(320px, 430px) 1fr;
+    gap: clamp(40px, 8vw, 120px);
+    align-items: center;
+    padding: 36px 0
+}
+
+.b1-foot {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 18px 0 26px;
+    color: var(--mut);
+    font-size: .85rem
+}
+
+.b1-foot b {
+    color: var(--ink)
+}
+
+/* Frosted glass card (Frappe's section/form classes are kept for login.js) */
+.b1 .page-card {
+    padding: 34px 30px 28px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, .9);
+    background: rgba(255, 255, 255, .72);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    backdrop-filter: blur(22px) saturate(160%);
+    box-shadow: 0 30px 70px -28px rgba(10, 31, 68, .35), 0 2px 6px rgba(10, 31, 68, .06), inset 0 1px 0 #fff
+}
+
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
+    .b1 .page-card {
+        background: #fff
+    }
+}
+
+.b1 .invalid-login {
+    animation: b1-s .4s
+}
+
+@keyframes b1-s {
+    25% {
+        transform: translateX(-6px)
+    }
+
+    75% {
+        transform: translateX(6px)
+    }
+}
+
+.b1-card-head {
+    margin-bottom: 22px
+}
+
+.b1-card-head h2 {
+    font-size: 1.65rem;
+    font-weight: 700;
+    letter-spacing: -.015em
+}
+
+.b1-card-head p {
+    color: var(--mut);
+    margin-top: 4px
+}
+
+.b1 form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px
+}
+
+.b1 .page-card-body,
+.b1 .page-card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 14px
+}
+
+.b1 .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px
+}
+
+.b1 label {
+    font-size: .84rem;
+    font-weight: 600;
+    color: var(--ink)
+}
+
+.b1 .form-control {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    color: var(--ink);
+    font: inherit;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: inset 0 1px 2px rgba(10, 31, 68, .04);
+    transition: border-color .15s, box-shadow .15s
+}
+
+.b1 .form-control::placeholder {
+    color: #5E7093
+}
+
+.b1 .form-control:hover {
+    border-color: #B5C8E6
+}
+
+.b1 .form-control:focus {
+    outline: none;
+    border-color: var(--acc);
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, .18)
+}
+
+.b1 .password-field {
+    position: relative
+}
+
+.b1 .password-field .form-control {
+    padding-right: 46px
+}
+
+.b1 .toggle-password {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 9px;
+    background: none;
+    color: var(--mut);
+    cursor: pointer
+}
+
+.b1 .toggle-password svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor
+}
+
+.b1 .toggle-password:hover {
+    color: var(--acc);
+    background: rgba(29, 78, 216, .07)
+}
+
+.b1-forgot {
+    align-self: flex-end;
+    font-size: .84rem;
+    font-weight: 600;
+    text-decoration: none
+}
+
+.b1-forgot:hover {
+    text-decoration: underline
+}
+
+.b1 .field-error {
+    display: none;
+    color: #B42318;
+    font-size: .82rem
+}
+
+.b1 .form-group.invalid .field-error {
+    display: block
+}
+
+.b1 .form-group.invalid .form-control,
+.b1 .page-card-body.invalid .form-control {
+    border-color: #D92D20
+}
+
+.b1 .es-alert {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: .88rem
+}
+
+.b1 .es-alert svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+    margin-top: 3px;
+    stroke: currentColor
+}
+
+.b1 .es-alert[data-theme=red] {
+    background: #FEF3F2;
+    border: 1px solid #FDA29B;
+    color: #B42318
+}
+
+.b1 .es-alert[data-theme=green] {
+    background: #ECFDF3;
+    border: 1px solid #6CE9A6;
+    color: #067647
+}
+
+.b1 .es-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 46px;
+    padding: 0 16px;
+    font: inherit;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: #fff;
+    transition: transform .15s, box-shadow .15s, background .15s
+}
+
+.b1 .es-button[data-variant=solid] {
+    color: #fff;
+    border-color: transparent;
+    background: var(--acc);
+    box-shadow: 0 10px 24px -10px rgba(29, 78, 216, .7)
+}
+
+.b1 .es-button[data-variant=solid]:hover {
+    background: #1E40AF
+}
+
+.b1 .es-button:hover {
+    transform: translateY(-1px)
+}
+
+.b1 .es-button.btn-login-option:hover {
+    background: #F3F8FF;
+    border-color: #B5C8E6
+}
+
+.b1 .es-button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+    transform: none
+}
+
+.b1 .es-button[aria-busy=true] {
+    pointer-events: none;
+    opacity: .85
+}
+
+.b1 .es-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #fff;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: b1-r .7s linear infinite
+}
+
+@keyframes b1-r {
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+.b1 a:focus-visible,
+.b1 button:focus-visible,
+.b1 .es-button:focus-visible {
+    outline: 3px solid var(--cy);
+    outline-offset: 2px
+}
+
+.b1 .sign-up-message {
+    margin-top: 20px;
+    text-align: center;
+    font-size: .88rem;
+    color: var(--mut)
+}
+
+.b1 .social-login-buttons,
+.b1 .resend-link {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: .88rem;
+    color: var(--mut)
+}
+
+/* utility classes that Frappe's 2FA step injects via JS */
+.b1 .flex {
+    display: flex
+}
+
+.b1 .flex-col {
+    flex-direction: column
+}
+
+.b1 .gap-4 {
+    gap: 16px
+}
+
+.b1 .gap-8 {
+    gap: 32px
+}
+
+.b1 .gap-1\.5 {
+    gap: 6px
+}
+
+.b1 .items-start {
+    align-items: flex-start
+}
+
+.b1 .w-full {
+    width: 100%
+}
+
+.b1 .mb-0 {
+    margin: 0
+}
+
+.b1 .p-0 {
+    padding: 0
+}
+
+.b1 .text-ink-gray-5,
+.b1 .text-ink-gray-6 {
+    color: var(--mut)
+}
+
+.b1 .otp-qr-code {
+    width: 180px;
+    padding: 8px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid var(--line)
+}
+
+.b1 .otp-setup-key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-family: ui-monospace, monospace
+}
+
+/* Hero: headline carousel */
+.b1-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap
+}
+
+.b1-slides {
+    display: grid
+}
+
+.b1-slide {
+    grid-area: 1/1;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(14px);
+    transition: opacity .7s, transform .7s, visibility 0s .7s
+}
+
+.b1-slide.is-on {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s
+}
+
+.b1-h {
+    font-size: clamp(2.3rem, 4.4vw, 3.8rem);
+    line-height: 1.08;
+    letter-spacing: -.025em;
+    color: var(--ink)
+}
+
+.b1-sub {
+    margin-top: 18px;
+    max-width: 46ch;
+    font-size: 1.1rem;
+    color: var(--mut)
+}
+
+.b1-h em {
+    font-style: italic
+}
+
+.b1-g {
+    background: linear-gradient(90deg, #1E40AF, #0891B2);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding-right: .08em
+}
+
+@supports not (background-clip:text) {
+    .b1-g {
+        background: none;
+        color: var(--acc)
+    }
+}
+
+.s1 .b1-h {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700
+}
+
+.s1 .b1-sub {
+    font-family: Inter, system-ui, sans-serif
+}
+
+.s2 .b1-h {
+    font-family: Sora, system-ui, sans-serif;
+    font-weight: 800;
+    letter-spacing: -.035em
+}
+
+.s2 .b1-sub {
+    font-family: Manrope, system-ui, sans-serif;
+    font-weight: 500
+}
+
+.s3 .b1-h {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-weight: 800;
+    letter-spacing: -.03em
+}
+
+.s3 .b1-sub {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-weight: 500
+}
+
+.s4 .b1-h {
+    font-family: Fraunces, Georgia, serif;
+    font-weight: 600
+}
+
+.s4 .b1-sub {
+    font-family: 'DM Sans', system-ui, sans-serif
+}
+
+.b1-dots {
+    display: flex;
+    gap: 8px;
+    margin-top: 22px
+}
+
+.b1-dots button {
+    width: 26px;
+    height: 6px;
+    padding: 0;
+    border: 0;
+    border-radius: 3px;
+    background: #B5C3DB;
+    cursor: pointer;
+    transition: background .2s, width .2s
+}
+
+.b1-dots button[aria-current=true] {
+    width: 40px;
+    background: var(--acc)
+}
+
+/* Module pills: zoom carousel drifting left to right (driven by b_one_login.bundle.js) */
+.b1-car {
+    margin-top: 40px;
+    max-width: 700px;
+    padding: 26px 0;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent)
+}
+
+.b1-trk {
+    display: flex;
+    gap: 14px;
+    list-style: none;
+    width: max-content;
+    will-change: transform
+}
+
+.b1-pill {
+    flex: none;
+    width: 248px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 18px 10px 10px;
+    border-radius: 999px;
+    color: #fff;
+    background: linear-gradient(135deg, #1E40AF, #0369A1);
+    box-shadow: 0 14px 28px -14px rgba(30, 64, 175, .7), inset 0 1px 0 rgba(255, 255, 255, .18);
+    will-change: transform
+}
+
+.b1-chip {
+    width: 40px;
+    height: 40px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .2)
+}
+
+.b1-ico {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round
+}
+
+.b1-pt {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25
+}
+
+.b1-pt b {
+    font-size: .88rem;
+    font-weight: 600
+}
+
+.b1-pt small {
+    font-size: .74rem;
+    color: #DCEBFF
+}
+
+.b1-car.is-static {
+    -webkit-mask-image: none;
+    mask-image: none;
+    overflow-x: auto;
+    padding: 8px 2px 14px
+}
+
+@media (max-width:960px) {
+    .b1-main {
+        grid-template-columns: 1fr;
+        max-width: 520px;
+        gap: 40px
+    }
+
+    .b1-trust {
+        display: none
+    }
+
+    .b1-head {
+        padding-top: 18px
+    }
+
+    .b1 .page-card {
+        padding: 28px 22px
+    }
+}
+
+@media (max-width:420px) {
+    .b1-brand small {
+        display: none
+    }
+
+    .b1-logos {
+        gap: 10px
+    }
+
+    .b1-logos img {
+        height: 36px
+    }
+}

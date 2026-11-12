@@ -1,0 +1,82 @@
+{
+    "actions": [],
+    "creation": "2026-11-09 00:00:00.000000",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "enabled",
+        "title",
+        "module",
+        "route",
+        "icon",
+        "custom_icon",
+        "roles"
+    ],
+    "fields": [
+        {
+            "default": "1",
+            "fieldname": "enabled",
+            "fieldtype": "Check",
+            "in_list_view": 1,
+            "columns": 1,
+            "label": "Show"
+        },
+        {
+            "fieldname": "title",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "columns": 2,
+            "label": "Tile Title",
+            "reqd": 1
+        },
+        {
+            "fieldname": "module",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "columns": 2,
+            "label": "Module (Sidebar name)",
+            "description": "e.g. Accounts, Selling, CRM, Buying, Stock, Manufacturing, Projects, Assets, Quality, Support, Setup"
+        },
+        {
+            "fieldname": "route",
+            "fieldtype": "Data",
+            "label": "Custom Route (optional)",
+            "description": "Overrides the module landing page, e.g. /desk/my-workspace"
+        },
+        {
+            "default": "finance",
+            "fieldname": "icon",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "columns": 2,
+            "label": "Icon",
+            "options": "finance\nsales\ncrm\nprocurement\ninventory\nmanufacturing\nprojects\nassets\nquality\nsupport\nsettings"
+        },
+        {
+            "fieldname": "custom_icon",
+            "fieldtype": "Attach Image",
+            "label": "Custom Icon (optional)"
+        },
+        {
+            "fieldname": "roles",
+            "fieldtype": "Small Text",
+            "in_list_view": 1,
+            "columns": 3,
+            "label": "Visible to Roles",
+            "description": "One role per line. Leave empty to show to everyone who can open the module."
+        }
+    ],
+    "index_web_pages_for_search": 0,
+    "istable": 1,
+    "links": [],
+    "modified": "2026-11-09 00:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Client Theme",
+    "name": "B-One App Tile",
+    "owner": "Administrator",
+    "permissions": [],
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": []
+}

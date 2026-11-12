@@ -1,0 +1,45 @@
+<link rel="stylesheet" href="/assets/client_theme/css/b_one_fonts.css">
+<style>
+/* B-One splash. Keeps core's "centered splash" classes so Frappe's own code can still find and remove it. */
+.splash.b1-splash{position:fixed!important;inset:0!important;top:0!important;left:0!important;width:100%!important;height:100%!important;margin:0!important;transform:none!important;
+display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:36px;overflow:hidden;z-index:99999;color:#0A1F44;
+background:linear-gradient(180deg,#F6F9FE 0%,#E6EFFC 100%);font-family:Inter,"Segoe UI Variable Text","Segoe UI",system-ui,sans-serif;animation:b1sp-in .4s ease-out}
+.b1-splash *{box-sizing:border-box}
+.b1-sp-g{position:absolute;width:62vmax;height:62vmax;border-radius:50%;pointer-events:none;will-change:transform}
+.b1-sp-g.g1{left:-22vmax;top:-30vmax;background:radial-gradient(closest-side,rgba(6,182,212,.26),transparent);animation:b1sp-drift 14s ease-in-out infinite}
+.b1-sp-g.g2{right:-24vmax;bottom:-34vmax;background:radial-gradient(closest-side,rgba(59,130,246,.26),transparent);animation:b1sp-drift 18s ease-in-out -6s infinite reverse}
+.b1-sp-logos{position:relative;display:flex;align-items:center;gap:18px;padding:20px 30px;border-radius:22px;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.95);
+box-shadow:0 30px 70px -30px rgba(10,31,68,.4),0 2px 6px rgba(10,31,68,.06),inset 0 1px 0 #fff;animation:b1sp-rise .7s cubic-bezier(.2,.8,.2,1) both,b1sp-float 3.6s ease-in-out .7s infinite}
+.splash.b1-splash img.b1-sp-img{display:block;width:auto!important;max-width:none!important;height:56px!important}
+.b1-sp-brand{display:flex;flex-direction:column;line-height:1.1}.b1-sp-brand b{font-size:1.35rem;font-weight:800;letter-spacing:-.01em}
+.b1-sp-brand small{font-size:.72rem;font-weight:600;color:#51638A}
+.b1-sp-sep{width:1px;height:44px;background:#CFDDF2}
+.b1-sp-load{position:relative;display:flex;flex-direction:column;align-items:center;gap:16px;animation:b1sp-rise .7s .15s cubic-bezier(.2,.8,.2,1) both}
+.b1-sp-bar{width:230px;height:4px;border-radius:2px;overflow:hidden;background:rgba(29,78,216,.14)}
+.b1-sp-bar i{display:block;width:40%;height:100%;border-radius:2px;background:linear-gradient(90deg,#1E40AF,#0891B2);animation:b1sp-bar 1.5s ease-in-out infinite}
+.b1-sp-t{position:relative;width:300px;height:22px;text-align:center;font-size:.92rem;font-weight:500;color:#51638A}
+.b1-sp-t span{position:absolute;left:0;right:0;opacity:0;animation:b1sp-text 9s ease-in-out infinite both}
+.b1-sp-t span:nth-child(2){animation-delay:3s}.b1-sp-t span:nth-child(3){animation-delay:6s}
+@keyframes b1sp-in{from{opacity:0}to{opacity:1}}
+@keyframes b1sp-rise{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes b1sp-float{50%{transform:translateY(-5px)}}
+@keyframes b1sp-drift{50%{transform:translate3d(8%,7%,0) scale(1.12)}}
+@keyframes b1sp-bar{from{transform:translateX(-110%)}to{transform:translateX(260%)}}
+@keyframes b1sp-text{0%{opacity:0;transform:translateY(8px)}6%,28%{opacity:1;transform:none}34%,100%{opacity:0;transform:translateY(-8px)}}
+@media (prefers-reduced-motion:reduce){.b1-splash *,.splash.b1-splash{animation:none!important}.b1-sp-t span:first-child{opacity:1}.b1-sp-bar i{width:55%}}
+@media (max-width:520px){.b1-sp-logos{flex-wrap:wrap;justify-content:center;gap:14px;padding:16px 20px;max-width:92vw}.b1-sp-sep{display:none}.splash.b1-splash img.b1-sp-img{height:44px!important}.b1-sp-t{width:86vw}}
+</style>
+<div class="centered splash b1-splash" role="status" aria-label="Loading B-One">
+	<i class="b1-sp-g g1"></i><i class="b1-sp-g g2"></i>
+	<div class="b1-sp-logos">
+		<img class="b1-sp-img" src="/assets/client_theme/images/logo-mark.svg" alt="B-One" width="46" height="56">
+		<span class="b1-sp-brand"><b>B-One</b><small>by B-Core Digital</small></span>
+		<i class="b1-sp-sep"></i>
+		<img class="b1-sp-img" src="/assets/client_theme/images/loyson.png" alt="Loyson Groups" width="155" height="56">
+	</div>
+	<div class="b1-sp-load">
+		<div class="b1-sp-bar"><i></i></div>
+		<div class="b1-sp-t" aria-hidden="true"><span>Securing your session…</span><span>Preparing your workspace…</span><span>Loading your modules…</span></div>
+	</div>
+</div>
+

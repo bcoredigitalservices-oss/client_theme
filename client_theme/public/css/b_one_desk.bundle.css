@@ -1,0 +1,289 @@
+/* B-One internal desk skin: forms, lists, sidebar, page head.
+   Chosen look: ice-tint sidebar with navy pill, ice-fill fields, soft cards, faint aurora page,
+   14px radius, comfortable density, navy list header, Manrope with Inter numbers.
+   Light mode only (dark mode keeps Frappe's own dark look); fonts apply to both.
+   Tokens first, so forms, lists, reports and dialogs follow; only a few component rules below.
+   Verified against Frappe develop source: .form-section, .section-head, .std-form-layout, .list-row-head,
+   .active-sidebar, .page-head, .page-container, --input-height, --btn-height, --radius*. */
+
+/* ---- Font (both modes) ---- */
+/* Same title-bar height in light and dark, so the dock and sidebar line up in both. */
+:root {
+    --page-head-height: 56px;
+}
+
+html:root {
+    --font-stack: "Manrope", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html body {
+    font-family: var(--font-stack);
+}
+
+html body :is(button, input, select, textarea) {
+    font-family: inherit;
+}
+
+/* Numbers use Inter with tabular figures so columns of amounts line up. */
+:is(.form-control, .grid-static-col):is([data-fieldtype="Currency"], [data-fieldtype="Float"], [data-fieldtype="Int"], [data-fieldtype="Percent"]),
+.frappe-control:is([data-fieldtype="Currency"], [data-fieldtype="Float"], [data-fieldtype="Int"], [data-fieldtype="Percent"]) .control-value,
+.list-row-col.text-right {
+    font-family: "Inter", "Manrope", system-ui, sans-serif;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---- Tokens (light mode) ---- */
+:root:not([data-theme="dark"]) {
+    --radius-sm: 6px;
+    --radius: 14px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+    --input-height: 36px;
+    --btn-height: 36px;
+    --list-row-height: 44px;
+    --control-bg: #E8F0FC;
+    --control-bg-on-gray: #DCE8FA;
+    --disabled-control-bg: #EEF3FB;
+    --card-bg: #FFFFFF;
+    --desk-sidebar-bg: #EEF4FD;
+    --b1-navy: #0A1F44;
+    --b1-ink-2: #51638A;
+    --b1-line: rgba(10, 31, 68, .08);
+    --b1-aurora:
+        radial-gradient(900px 420px at 15% 100%, rgba(6, 182, 212, .14), transparent 70%),
+        radial-gradient(760px 360px at 90% 0%, rgba(29, 78, 216, .09), transparent 70%),
+        #F3F8FF;
+}
+
+/* ---- Page: faint aurora behind everything ---- */
+:root:not([data-theme="dark"]) body:not(.b1-apps-screen) {
+    background: var(--b1-aurora);
+    background-attachment: fixed;
+}
+
+:root:not([data-theme="dark"]) body:not(.b1-apps-screen) .page-container {
+    background: transparent;
+}
+
+/* Workspace pages (Support, Accounting...): the inner .page-content had its own white fill, which ended short of the
+   window bottom and stuck out past the title bar. Transparent lets the aurora show; the cards keep their white. */
+:root:not([data-theme="dark"]) body:not(.b1-apps-screen) #page-Workspaces .page-content,
+:root:not([data-theme="dark"]) body:not(.b1-apps-screen) #page-Workspaces .page-body,
+:root:not([data-theme="dark"]) body:not(.b1-apps-screen) #page-Workspaces .layout-main-section {
+    background: transparent;
+}
+
+/* ---- Sidebar: ice tint, navy pill for the active item ---- */
+:root:not([data-theme="dark"]) .active-sidebar {
+    background: var(--b1-navy);
+    box-shadow: none;
+    border-radius: var(--radius);
+    color: #fff;
+    --icon-stroke: #fff;
+}
+
+:root:not([data-theme="dark"]) .active-sidebar :is(.sidebar-item-label, a, svg) {
+    color: #fff;
+}
+
+:root:not([data-theme="dark"]) .active-sidebar svg {
+    stroke: #fff;
+}
+
+.section-break {
+    letter-spacing: .02em;
+}
+
+/* ---- Forms: each section is a soft card; fields have an ice fill ---- */
+:root:not([data-theme="dark"]) .std-form-layout>.form-layout>.form-page {
+    background: transparent;
+}
+
+:root:not([data-theme="dark"]) .std-form-layout .form-section:not(.form-in-grid *),
+:root:not([data-theme="dark"]) .std-form-layout .form-dashboard-section:not(.form-in-grid *) {
+    background: #fff;
+    border: 1px solid var(--b1-line) !important;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 14px rgba(10, 31, 68, .06);
+    margin: 14px var(--padding-md) !important;
+    padding: 6px var(--padding-md) 12px;
+}
+
+:root:not([data-theme="dark"]) .form-section .section-head {
+    color: var(--b1-navy);
+    font-weight: 700;
+}
+
+:root:not([data-theme="dark"]) .control-label {
+    color: var(--b1-ink-2);
+    font-weight: 500;
+}
+
+:root:not([data-theme="dark"]) .form-control:focus {
+    background: #fff;
+    border-color: #1D4ED8;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, .18);
+}
+
+/* ---- Lists: navy header row, ice hover ---- */
+:root:not([data-theme="dark"]) .list-row-head {
+    background: var(--b1-navy);
+    border-radius: var(--radius);
+}
+
+:root:not([data-theme="dark"]) .list-row-head :is(.list-row-col, .list-subject, .list-row-col *, .list-subject *) {
+    color: #E6EEFF;
+    font-weight: 600;
+}
+
+:root:not([data-theme="dark"]) .list-row-container:hover .list-row:not(.list-row-head) {
+    background: #EEF4FD;
+}
+
+.indicator-pill {
+    font-weight: 500;
+}
+
+
+/* =====================================================================
+   Layout: Islands + Ledger
+   Islands: the pinned dock and the sidebar become floating rounded cards (desktop widths only).
+   Ledger: the page head becomes a full-width navy title bar with breadcrumb and actions.
+   Colours are unchanged: navy #0A1F44, ice tint sidebar, brand blue buttons.
+   ===================================================================== */
+@media (min-width: 768px) {
+    body.dock-pinned .dock {
+        margin: 10px 0 10px 10px;
+        height: calc(100vh - 20px);
+        height: calc(100dvh - 20px);
+        border-radius: 28px;
+        border-right: 0;
+        box-shadow: 0 10px 28px rgba(10, 31, 68, .22);
+    }
+
+    .body-sidebar {
+        margin: 10px;
+        height: calc(100vh - 20px);
+        height: calc(100dvh - 20px);
+        border-radius: 22px;
+        border-right: 0;
+        box-shadow: 0 10px 28px rgba(10, 31, 68, .10);
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+
+    /* The navy title bar floats too: same 10px inset as the dock and sidebar, rounded, sticky below the gap. */
+    .page-head {
+        margin: 10px 10px 10px 0;
+        top: 10px;
+        border-radius: var(--radius-lg);
+    }
+
+    /* Scrolled content used to show in the 10px gap above the stuck bar. This strip blurs and covers it. */
+    .page-head::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        left: 0;
+        right: 0;
+        top: -10px;
+        height: 10px;
+        background: color-mix(in srgb, var(--bg-color, #F3F8FF) 88%, transparent);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        pointer-events: none;
+    }
+}
+
+/* Ledger title bar. The Espresso and legacy tokens are re-set inside the bar so the back button,
+   breadcrumbs, ghost and secondary buttons all turn light without touching each component. */
+.page-head {
+    background: #0A1F44 !important;
+    border-bottom: 0 !important;
+    box-shadow: 0 6px 18px rgba(10, 31, 68, .16);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    --ink-gray-9: #FFFFFF;
+    --ink-gray-8: #F1F5FF;
+    --ink-gray-7: #DCE6F8;
+    --ink-gray-6: #C3D1EC;
+    --ink-gray-5: #A9BAD9;
+    --ink-gray-4: #8DA0C4;
+    --surface-gray-1: rgba(255, 255, 255, .06);
+    --surface-gray-2: rgba(255, 255, 255, .12);
+    --surface-gray-3: rgba(255, 255, 255, .18);
+    --outline-gray-1: rgba(255, 255, 255, .14);
+    --outline-gray-2: rgba(255, 255, 255, .22);
+    --text-color: #E6EEFF;
+    --heading-color: #FFFFFF;
+    --text-muted: #A9BAD9;
+    --text-light: #A9BAD9;
+    --control-bg: rgba(255, 255, 255, .12);
+    --btn-default-bg: rgba(255, 255, 255, .12);
+    --icon-stroke: #E6EEFF;
+    color: #E6EEFF;
+}
+
+.page-head .es-breadcrumbs li:not(:last-child),
+.page-head .es-breadcrumbs li:not(:last-child) a {
+    font-size: var(--text-sm);
+    color: #A9BAD9;
+}
+
+.page-head .es-breadcrumbs li:last-child,
+.page-head .es-breadcrumbs li:last-child * {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+.page-head .es-breadcrumbs a:hover {
+    color: #FFFFFF;
+}
+
+.page-head .btn-default,
+.page-head .btn.btn-default {
+    background: rgba(255, 255, 255, .12);
+    color: #FFFFFF;
+    border-color: transparent;
+}
+
+.page-head .btn-default:hover {
+    background: rgba(255, 255, 255, .20);
+}
+
+
+/* Sidebar header (module switcher): a floating white chip, so it is clearly not one of the list rows.
+   The navy-pill rule for .active-sidebar also lands on this header while its menu is open, so it is
+   put back to the chip look here. */
+.body-sidebar .sidebar-header {
+    height: 44px;
+    margin: 10px 10px 6px;
+    border-radius: var(--radius);
+}
+
+:root:not([data-theme="dark"]) .body-sidebar .sidebar-header,
+:root:not([data-theme="dark"]) .body-sidebar .sidebar-header.active-sidebar {
+    background: #FFFFFF;
+    color: var(--b1-navy);
+    border: 1px solid var(--b1-line);
+    box-shadow: 0 4px 14px rgba(10, 31, 68, .08);
+    --icon-stroke: var(--b1-navy);
+}
+
+:root:not([data-theme="dark"]) .body-sidebar .sidebar-header:hover,
+:root:not([data-theme="dark"]) .body-sidebar .sidebar-header.hover {
+    background: #F7FAFF;
+}
+
+:root:not([data-theme="dark"]) .body-sidebar .sidebar-header :is(.header-title, a, svg) {
+    color: var(--b1-navy);
+}
+
+:root:not([data-theme="dark"]) .body-sidebar .sidebar-header svg {
+    stroke: var(--b1-navy);
+}
+
+.body-sidebar .sidebar-header .header-title {
+    font-weight: 600;
+}

@@ -1,0 +1,642 @@
+/* B-One desk theme: "Navy dock". Built on the real Espresso / desk tokens of your Frappe commit. */
+.built-with-frappe,
+.frappe-footer,
+footer .text-muted,
+.navbar-brand img {
+	display: none !important;
+}
+
+/* ---- Tokens ----
+   Light-only values are scoped so they never win in dark mode. */
+:root:not([data-theme="dark"]) {
+	--blue-50: #F1F6FE;
+	--blue-100: #E4ECFB;
+	--blue-200: #D5E3F7;
+	--blue-300: #B5CBF2;
+	--blue-400: #4F7BE8;
+	--blue-500: #1D4ED8;
+	--blue-600: #1E40AF;
+	--blue-700: #1E3A8A;
+	--btn-primary: #1D4ED8;
+	--bg-color: #F6F9FE;
+	--desk-sidebar-bg: #FFFFFF;
+}
+
+/* Dock is navy in both modes. */
+:root,
+[data-theme="light"],
+[data-theme="dark"] {
+	--dock-bg: #0A1F44;
+	--dock-ink: #9FB3D9;
+	--dock-ink-hover: #FFFFFF;
+	--dock-ink-active: #FFFFFF;
+}
+
+[data-theme="dark"] {
+	--btn-primary: #3B6BEA;
+}
+
+/* ---- Logo mark: both variants are rendered; show the white/cyan one on navy surfaces ---- */
+.b1-mark--light {
+	display: none;
+}
+
+.dock .b1-mark--dark,
+[data-theme="dark"] .b1-mark--dark {
+	display: none;
+}
+
+.dock .b1-mark--light,
+[data-theme="dark"] .b1-mark--light {
+	display: inline-block;
+}
+
+/* ---- Primary buttons ---- */
+body .es-button {
+	--bt-solid-bg: #1D4ED8;
+	--bt-solid-bg-hover: #1E40AF;
+	--bt-solid-bg-active: #1E3A8A;
+	--bt-solid-fg: #FFFFFF;
+}
+
+body .btn.btn-primary {
+	background-color: #1D4ED8;
+	color: #fff;
+}
+
+body .btn.btn-primary:hover {
+	background-color: #1E40AF;
+}
+
+/* ---- Dock (navy rail) ---- */
+.dock .dock-logo {
+	border-bottom-color: rgba(255, 255, 255, .14);
+}
+
+.dock .dock-item:hover,
+.dock .dock-item:focus-visible {
+	background: rgba(255, 255, 255, .09);
+	color: #fff;
+}
+
+.dock .dock-item.active {
+	background: rgba(255, 255, 255, .15);
+	box-shadow: inset 3px 0 0 #22D3EE;
+	color: #fff;
+}
+
+.dock .dock-item:focus-visible {
+	outline: 2px solid #22D3EE;
+}
+
+.dock .dock-utilities .dock-item {
+	color: #B7C6E4;
+}
+
+.dock .dock-utilities .dock-item:hover {
+	background: rgba(255, 255, 255, .09);
+	color: #fff;
+}
+
+.dock .dock-utilities:not(:empty) {
+	border-bottom-color: rgba(255, 255, 255, .14);
+}
+
+.dock .dock-item-dot {
+	background: #22D3EE;
+}
+
+body.dock-pinned .dock {
+	border-right: 1px solid #0A1F44;
+}
+
+/* Sidebar, forms and list styling live in b_one_desk.bundle.css. */
+
+/* =====================================================================
+   Apps screen (/desk): "Ice light" with aurora, glass-navy popups, Manrope.
+   Scoped to body.b1-apps-screen, which the JS toggles from the route.
+   The html prefix beats the page's own late-loaded css.
+   ===================================================================== */
+html body.b1-apps-screen {
+	--bg-color: transparent;
+	--desk-sidebar-bg: transparent;
+	--b1-ink: #0A1F44;
+	--b1-ink-2: #51638A;
+	--b1-line: rgba(10, 31, 68, .12);
+	--b1-font: "Manrope", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+	--font-stack: var(--b1-font);
+	font-family: var(--b1-font);
+	color: var(--b1-ink);
+	background:
+		radial-gradient(900px 420px at 22% 100%, rgba(6, 182, 212, .20), transparent 70%),
+		radial-gradient(760px 360px at 78% 0%, rgba(29, 78, 216, .14), transparent 70%),
+		radial-gradient(620px 300px at 100% 70%, rgba(6, 182, 212, .10), transparent 70%),
+		radial-gradient(700px 360px at -5% 20%, rgba(29, 78, 216, .08), transparent 70%),
+		#EAF2FD;
+	background-attachment: fixed;
+}
+
+html:has(body.b1-apps-screen) {
+	background: #EAF2FD;
+}
+
+html body.b1-apps-screen :where(button, input, select, textarea, .modal-content, .dropdown-menu, .popover) {
+	font-family: var(--b1-font);
+}
+
+html body.b1-apps-screen #body,
+html body.b1-apps-screen .page-container,
+html body.b1-apps-screen .page-body,
+html body.b1-apps-screen .main-section,
+html body.b1-apps-screen .desktop-container,
+html body.b1-apps-screen .layout-main,
+html body.b1-apps-screen .layout-main-section-wrapper {
+	background: transparent;
+}
+
+/* Header: no border, navy text */
+html body.b1-apps-screen .navbar-container,
+html body.b1-apps-screen .navbar-container .navbar,
+html body.b1-apps-screen header.navbar {
+	background: transparent !important;
+	border: 0 !important;
+	box-shadow: none !important;
+}
+
+html body.b1-apps-screen .navbar-container,
+html body.b1-apps-screen .navbar-container a,
+html body.b1-apps-screen .page-title,
+html body.b1-apps-screen .title-text,
+html body.b1-apps-screen .desktop-title {
+	color: var(--b1-ink);
+}
+
+/* Logo: the plain dark mark, no background */
+html body.b1-apps-screen .b1-mark--dark {
+	display: inline-block;
+}
+
+html body.b1-apps-screen .b1-mark--light {
+	display: none;
+}
+
+html body.b1-apps-screen .navbar-container img[src$="/logo-mark-clean.svg"],
+html body.b1-apps-screen .b1-mark--dark {
+	width: auto;
+	height: 38px;
+	padding: 0;
+	object-fit: contain;
+	border-radius: 0;
+	background: none;
+	box-shadow: none;
+}
+
+/* Search bar: frosted white pill with blue focus ring */
+html body.b1-apps-screen .search-widget-button {
+	--icon-stroke: #1D4ED8;
+	height: 42px;
+	min-width: min(420px, 60vw);
+	padding: 0 16px;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, .72);
+	color: var(--b1-ink-2);
+	border: 1px solid var(--b1-line);
+	box-shadow: 0 6px 20px rgba(10, 31, 68, .08);
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+	transition: border-color .2s, background .2s, box-shadow .2s;
+}
+
+html body.b1-apps-screen .search-widget-button:hover {
+	background: #fff;
+	border-color: rgba(29, 78, 216, .45);
+}
+
+html body.b1-apps-screen .search-widget-button:focus-visible {
+	outline: none;
+	border-color: #1D4ED8;
+	box-shadow: 0 0 0 3px rgba(29, 78, 216, .20), 0 6px 20px rgba(10, 31, 68, .08);
+}
+
+/* Notification and cloud icons: round white buttons */
+html body.b1-apps-screen .desktop-notification-icon,
+html body.b1-apps-screen .desktop-cloud-settings {
+	--icon-stroke: #0A1F44;
+	color: #0A1F44;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 42px;
+	height: 42px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, .72);
+	border: 1px solid var(--b1-line);
+	box-shadow: 0 4px 14px rgba(10, 31, 68, .07);
+	transition: background .2s, border-color .2s, transform .2s;
+}
+
+html body.b1-apps-screen .desktop-notification-icon:hover,
+html body.b1-apps-screen .desktop-cloud-settings:hover {
+	background: #fff;
+	border-color: rgba(29, 78, 216, .45);
+	transform: translateY(-1px);
+}
+
+html body.b1-apps-screen .navbar-container .avatar {
+	box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--b1-line);
+}
+
+/* Tile grid */
+html body.b1-apps-screen .icons {
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	gap: 22px;
+	width: 100%;
+	max-width: 1000px;
+	margin-inline: auto;
+}
+
+html body.b1-apps-screen .desktop-icon {
+	--b1-accent: #1D4ED8;
+	--b1-hue: 0deg;
+	--b1-sat: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	min-height: 150px;
+	padding: 20px 10px 16px;
+	border-radius: 20px;
+	border: 1px solid var(--b1-line);
+	background: #fff;
+	background: radial-gradient(130px 90px at 50% 0, color-mix(in srgb, var(--b1-accent) 13%, transparent), transparent), #fff;
+	box-shadow: 0 10px 30px rgba(10, 31, 68, .08), inset 0 1px 0 #fff;
+	opacity: 1;
+	transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+
+html body.b1-apps-screen .desktop-icon:hover,
+html body.b1-apps-screen .desktop-icon:focus-visible {
+	transform: translateY(-4px);
+	border-color: var(--b1-accent);
+	outline: none;
+	box-shadow: 0 16px 38px rgba(10, 31, 68, .14), 0 0 0 3px color-mix(in srgb, var(--b1-accent) 22%, transparent);
+}
+
+/* Labels: navy. !important because the page applies its own ink colour and opacity. */
+html body.b1-apps-screen .desktop-icon,
+html body.b1-apps-screen .desktop-icon .icon-title,
+html body.b1-apps-screen .desktop-icon .icon-title * {
+	color: #0A1F44 !important;
+	opacity: 1 !important;
+}
+
+html body.b1-apps-screen .icon-title {
+	font-size: 13.5px;
+	font-weight: 600;
+	letter-spacing: 0;
+	line-height: 1.25;
+	text-align: center;
+	white-space: normal;
+	overflow: visible !important;
+	text-overflow: clip !important;
+	overflow-wrap: normal;
+	word-break: normal;
+	hyphens: none;
+	padding-inline: 2px;
+	max-width: none;
+	width: 100%;
+}
+
+html body.b1-apps-screen .icon-subtitle {
+	color: var(--b1-ink-2);
+}
+
+html body.b1-apps-screen .icon-container img {
+	border-radius: 16px;
+	filter: hue-rotate(var(--b1-hue)) saturate(var(--b1-sat)) drop-shadow(0 6px 10px rgba(10, 31, 68, .22));
+}
+
+/* Per-module colour, matched on the icon file name so reordering tiles keeps colours. */
+html body.b1-apps-screen .desktop-icon:has(img[src*="/finance.svg"]) {
+	--b1-accent: #10B981;
+	--b1-hue: -61deg;
+}
+
+html body.b1-apps-screen .desktop-icon:has(img[src*="/sales.svg"]) {
+	--b1-accent: #3B82F6;
+	--b1-hue: 0deg;
+}
+
+html body.b1-apps-screen .desktop-icon:has(img[src*="/crm.svg"]) {
+	--b1-accent: #8B5CF6;
+	--b1-hue: 37deg;
+}
+
+html body.b1-apps-screen .desktop-icon:has(img[src*="/procurement.svg"]) {
+	--b1-accent: #06B6D4;
+	--b1-hue: -31deg;
+}
+
+html body.b1-apps-screen .desktop-icon:has(img[src*="/inventory.svg"]) {
+	--b1-accent: #F59E0B;
+	--b1-hue: 177deg;
+}
+
+html body.b1-apps-screen .desktop-icon:has(img[src*="/manufacturing.svg"]) {
+	--b1-accent: #F43F5E;
+	--b1-hue: 129deg;
+}
+
+html body.b1-apps-screen .desktop-icon:has(img[src*="/projects.svg"]) {
+	--b1-accent: #6366F1;
+	--b1-hue: 19deg;
+}
+
+html body.b1-apps-screen .desktop-icon:has(img[src*="/assets.svg"]) {
+	--b1-accent: #14B8A6;
+	--b1-hue: -49deg;
+}
+
+html body.b1-apps-screen .desktop-icon:has(img[src*="/quality.svg"]) {
+	--b1-accent: #22C55E;
+	--b1-hue: -81deg;
+}
+
+html body.b1-apps-screen .desktop-icon:has(img[src*="/support.svg"]) {
+	--b1-accent: #D946EF;
+	--b1-hue: 79deg;
+}
+
+html body.b1-apps-screen .desktop-icon:has(img[src*="/settings.svg"]) {
+	--b1-accent: #64748B;
+	--b1-sat: .25;
+}
+
+@media (max-width: 1100px) {
+	html body.b1-apps-screen .icons {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 760px) {
+	html body.b1-apps-screen .icons {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 14px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	html body.b1-apps-screen .desktop-icon,
+	html body.b1-apps-screen .search-widget-button,
+	html body.b1-apps-screen .desktop-notification-icon,
+	html body.b1-apps-screen .desktop-cloud-settings {
+		transition: none;
+		transform: none;
+	}
+}
+
+html body.b1-apps-screen {
+	--b1-glass: rgba(6, 66, 110, .75);
+	--b1-glass-blur: 11px;
+}
+
+/* Aqua tint glass: 75% opacity, 11px blur. Tune both here. */
+/* ---- Popups on the apps screen: glass navy menus, popovers and dialogs ----
+   Real Frappe classes: .es-menu (avatar menu), .es-popover (notifications), .modal:not(.b1-about-dialog) .modal-content (search, dialogs).
+   Frappe resolves its legacy aliases (--text-color, --fg-color...) at :root, so redefining only the Espresso
+   tokens would not reach them: both families are set here, inside the popup scope only. */
+html body.b1-apps-screen .es-menu,
+html body.b1-apps-screen .es-popover,
+html body.b1-apps-screen .modal:not(.b1-about-dialog) .modal-content {
+	--surface-base: transparent;
+	--surface-elevation-1: transparent;
+	--surface-elevation-2: transparent;
+	--surface-elevation-3: transparent;
+	--awesomplete-hover-bg: transparent;
+	--surface-gray-1: rgba(255, 255, 255, .05);
+	--surface-gray-2: rgba(255, 255, 255, .09);
+	--surface-gray-3: rgba(255, 255, 255, .14);
+	--surface-gray-4: rgba(255, 255, 255, .20);
+	--ink-gray-9: #FFFFFF;
+	--ink-gray-8: #F1F5FF;
+	--ink-gray-7: #DCE6F8;
+	--ink-gray-6: #C3D1EC;
+	--ink-gray-5: #A9BAD9;
+	--ink-gray-4: #8DA0C4;
+	--ink-gray-3: #7186AE;
+	--outline-gray-1: rgba(255, 255, 255, .12);
+	--outline-gray-2: rgba(255, 255, 255, .18);
+	--outline-gray-3: rgba(255, 255, 255, .26);
+	--bg-color: transparent;
+	--fg-color: transparent;
+	--card-bg: rgba(255, 255, 255, .05);
+	--modal-bg: transparent;
+	--popover-bg: transparent;
+	--control-bg: rgba(255, 255, 255, .08);
+	--control-bg-on-gray: rgba(255, 255, 255, .12);
+	--subtle-accent: rgba(255, 255, 255, .06);
+	--subtle-fg: rgba(255, 255, 255, .09);
+	--fg-hover-color: rgba(255, 255, 255, .10);
+	--text-color: #E6EEFF;
+	--heading-color: #FFFFFF;
+	--text-muted: #A9BAD9;
+	--text-light: #A9BAD9;
+	--placeholder-color: #7186AE;
+	--border-color: rgba(255, 255, 255, .14);
+	--dark-border-color: rgba(255, 255, 255, .22);
+	--icon-stroke: currentColor;
+	color: #E6EEFF;
+}
+
+html body.b1-apps-screen .es-menu,
+html body.b1-apps-screen .es-popover,
+html body.b1-apps-screen .modal:not(.b1-about-dialog) .modal-content {
+	background: linear-gradient(135deg, rgba(255, 255, 255, .30), rgba(255, 255, 255, 0) 44%), var(--b1-glass);
+	border: 1px solid rgba(190, 240, 255, .55);
+	border-radius: 16px;
+	box-shadow: 0 14px 34px rgba(10, 31, 68, .24), inset 0 1px 0 rgba(255, 255, 255, .5);
+	-webkit-backdrop-filter: blur(var(--b1-glass-blur)) saturate(150%);
+	backdrop-filter: blur(var(--b1-glass-blur)) saturate(150%);
+}
+
+html body.b1-apps-screen .modal:not(.b1-about-dialog) .modal-content :is(.modal-header, .modal-footer, .awesomebar-modal-footer) {
+	background: transparent;
+	border-color: rgba(255, 255, 255, .12);
+	color: #E6EEFF;
+}
+
+html body.b1-apps-screen .modal:not(.b1-about-dialog) .modal-content :is(.modal-title, h1, h2, h3, h4, label) {
+	color: #fff;
+}
+
+html body.b1-apps-screen .modal:not(.b1-about-dialog) .modal-content :is(input, .form-control):not([type="checkbox"]):not([type="radio"]) {
+	background: rgba(255, 255, 255, .08);
+	color: #fff;
+	border-color: rgba(255, 255, 255, .18);
+}
+
+html body.b1-apps-screen .modal:not(.b1-about-dialog) .modal-content .help-item {
+	background: rgba(255, 255, 255, .12);
+	color: #E6EEFF;
+}
+
+html body.b1-apps-screen .modal:not(.b1-about-dialog) .modal-content a:not(.btn) {
+	color: #FFFFFF;
+}
+
+/* Search results: selected and hovered rows are outlined, not filled */
+html body.b1-apps-screen .modal:not(.b1-about-dialog) .awesomplete [role="listbox"],
+html body.b1-apps-screen .modal:not(.b1-about-dialog) .awesomplete ul {
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+}
+
+html body.b1-apps-screen .modal:not(.b1-about-dialog) .awesomplete li,
+html body.b1-apps-screen .modal:not(.b1-about-dialog) .awesomplete [role="option"] {
+	color: #FFFFFF;
+	background: transparent;
+	border: 1px solid transparent;
+}
+
+html body.b1-apps-screen .modal:not(.b1-about-dialog) .awesomplete li:hover,
+html body.b1-apps-screen .modal:not(.b1-about-dialog) .awesomplete li[aria-selected="true"],
+html body.b1-apps-screen .modal:not(.b1-about-dialog) .awesomplete [role="option"][aria-selected="true"] {
+	background: transparent;
+	border-color: rgba(255, 255, 255, .60);
+	color: #FFFFFF;
+}
+
+html body.b1-apps-screen .modal:not(.b1-about-dialog) .awesomplete li * {
+	color: inherit;
+}
+
+html body.b1-apps-screen .modal-backdrop {
+	background: #0A1F44;
+}
+
+/* Search match highlight (<mark>): the default yellow fill made white text unreadable on glass.
+   Use a soft translucent fill, bold weight and a cyan underline instead. */
+html body.b1-apps-screen .modal:not(.b1-about-dialog) .modal-content mark,
+html body.b1-apps-screen .es-popover mark,
+html body.b1-apps-screen .es-menu mark {
+	background: rgba(255, 255, 255, .20);
+	color: #FFFFFF;
+	font-weight: 700;
+	padding: 0 1px;
+	border-radius: 3px;
+	box-shadow: inset 0 -2px 0 #7DD3FC;
+}
+
+/* ---- About and Support dialogs (use theme tokens, so they read well on both light and navy) ---- */
+.b1-about {
+	text-align: center;
+	padding: 6px 0 2px;
+}
+
+.b1-about-logo {
+	width: 56px;
+	height: 68px;
+	object-fit: contain;
+	margin-bottom: 10px;
+}
+
+.b1-about-name {
+	font-size: 20px;
+	font-weight: 700;
+	color: var(--heading-color);
+	line-height: 1.2;
+}
+
+.b1-about-by {
+	font-size: 13px;
+	color: var(--text-muted);
+	margin-bottom: 16px;
+}
+
+.b1-about-rows {
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	gap: 8px 18px;
+	text-align: left;
+	margin: 0 auto 16px;
+	max-width: 440px;
+}
+
+.b1-about-rows dt {
+	color: var(--text-muted);
+	font-weight: 500;
+}
+
+.b1-about-rows dd {
+	margin: 0;
+	color: var(--text-color);
+	word-break: break-word;
+}
+
+.b1-about-legal {
+	font-size: 11.5px;
+	color: var(--text-muted);
+	margin: 0;
+}
+
+.b1-support p {
+	margin: 0 0 12px;
+	color: var(--text-color);
+}
+
+.b1-support-mail {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-weight: 600;
+}
+
+.b1-support-note {
+	font-size: 12px;
+	color: var(--text-muted) !important;
+}
+
+/* About dialog: always the ice-light aurora look, on every page and in dark mode too */
+html body .modal.b1-about-dialog .modal-content {
+	--text-color: #0A1F44;
+	--heading-color: #0A1F44;
+	--text-muted: #51638A;
+	--border-color: rgba(10, 31, 68, .12);
+	--ink-gray-9: #0A1F44;
+	--ink-gray-8: #0A1F44;
+	--ink-gray-5: #51638A;
+	--outline-gray-1: rgba(10, 31, 68, .12);
+	font-family: "Manrope", "Inter", system-ui, sans-serif;
+	color: #0A1F44;
+	background:
+		radial-gradient(520px 240px at 20% 100%, rgba(6, 182, 212, .22), transparent 70%),
+		radial-gradient(420px 220px at 85% 0%, rgba(29, 78, 216, .16), transparent 70%),
+		#EAF2FD;
+	border: 1px solid rgba(10, 31, 68, .12);
+	border-radius: 20px;
+	box-shadow: 0 24px 60px rgba(10, 31, 68, .25);
+}
+
+html body .modal.b1-about-dialog :is(.modal-header, .modal-footer) {
+	background: transparent;
+	border-color: rgba(10, 31, 68, .10);
+}
+
+html body .modal.b1-about-dialog .modal-title {
+	color: #0A1F44;
+}
+
+html body .modal.b1-about-dialog .b1-about-name {
+	color: #0A1F44;
+}
+
+html body .modal.b1-about-dialog a:not(.btn) {
+	color: #1D4ED8;
+}
+
+html body .modal.b1-about-dialog .modal-header .btn-modal-close svg {
+	stroke: #0A1F44;
+}

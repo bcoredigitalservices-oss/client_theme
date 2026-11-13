@@ -121,8 +121,15 @@
 					frappe.call({
 						method: "frappe.utils.change_log.get_versions",
 						callback: (r) => {
+							const RELABEL = {
+								frappe: "Platform core",
+								erpnext: "Business suite",
+							};
 							const out = { [brand().name]: brand().version || "n/a" };
-							Object.entries(r.message || {}).forEach(([k, v]) => (out[k] = v.branch_version || v.version));
+							Object.entries(r.message || {}).forEach(([k, v]) => {
+								const key = RELABEL[k.toLowerCase()] || k;
+								out[key] = v.branch_version || v.version;
+							});
 							done(out);
 						},
 						error: () => done({ [brand().name]: brand().version || "n/a" }),
@@ -340,10 +347,88 @@
 		return true;
 	}
 
+	// Clear ERPNext and Frappe help links so desk help menus never link to external docs
+	function install_help_links_guard() {
+		try {
+			if (!window.frappe) return false;
+			if (frappe.__b1_help_guarded) return true;
+			frappe.__b1_help_guarded = true;
+			frappe.provide("frappe.help");
+			frappe.help.help_links = new Proxy({}, {
+				get: () => [],
+				set: () => true,
+			});
+			return true;
+		} catch (e) {
+			console.error("B-One: help_links guard failed", e); // eslint-disable-line no-console
+			return true;
+		}
+	}
+
+	// Rebrand the "For erpnext" layer in Manage Sidebar to "For B-One" without breaking saves
+	function patch_sidebar_manager(cls) {
+		try {
+			if (!cls || !cls.prototype || cls.prototype.__b1_patched) return;
+			cls.prototype.__b1_patched = true;
+			const orig_layers = Object.getOwnPropertyDescriptor(cls.prototype, "layers");
+			if (orig_layers && orig_layers.get) {
+				Object.defineProperty(cls.prototype, "layers", {
+					configurable: true,
+					enumerable: true,
+					get() {
+						const res = orig_layers.get.call(this);
+						if (res && res.app) {
+							res.app = Object.assign({}, res.app, {
+								label: () => __("For {0}", [brand().name]),
+							});
+						}
+						return res;
+					},
+				});
+			}
+		} catch (e) {
+			console.error("B-One: patch_sidebar_manager failed", e); // eslint-disable-line no-console
+		}
+	}
+
+	function install_sidebar_patch() {
+		try {
+			if (!window.frappe || !frappe.ui) return false;
+			if (frappe.ui.__b1_sb_hooked) return true;
+			frappe.ui.__b1_sb_hooked = true;
+
+			let _SM = frappe.ui.SidebarManager;
+			if (_SM) patch_sidebar_manager(_SM);
+			try {
+				Object.defineProperty(frappe.ui, "SidebarManager", {
+					configurable: true,
+					enumerable: true,
+					get() {
+						return _SM;
+					},
+					set(val) {
+						_SM = val;
+						patch_sidebar_manager(val);
+					},
+				});
+			} catch (e) {
+				setInterval(() => {
+					if (frappe.ui.SidebarManager) patch_sidebar_manager(frappe.ui.SidebarManager);
+				}, 200);
+			}
+			return true;
+		} catch (e) {
+			console.error("B-One: install_sidebar_patch failed", e); // eslint-disable-line no-console
+			return true;
+		}
+	}
+
 	until(install);
 	until(watch_routes);
 	until(install_brand_ui);
 	until(remove_sidebar_ads);
 	until(install_user_menu);
 	until(install_scrubber);
+	until(install_help_links_guard);
+	until(install_sidebar_patch);
 })();

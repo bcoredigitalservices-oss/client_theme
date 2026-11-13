@@ -39,6 +39,7 @@ def extend_bootinfo(bootinfo):
 	"""
 	try:
 		bootinfo.b1_brand = _brand()
+		bootinfo.show_new_navigation_prompt = False
 	except Exception:
 		frappe.log_error(title="B-One: brand boot info failed")
 

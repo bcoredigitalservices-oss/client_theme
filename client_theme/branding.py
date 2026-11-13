@@ -42,6 +42,10 @@ def _core_settings():
 	if frappe.get_meta("System Settings").has_field("allow_error_traceback"):
 		frappe.db.set_single_value("System Settings", "allow_error_traceback", 0)
 
+	# Suppress system update popups linking to GitHub releases
+	if frappe.get_meta("System Settings").has_field("disable_system_update_notification"):
+		frappe.db.set_single_value("System Settings", "disable_system_update_notification", 1)
+
 
 def _step(fn):
 	"""Run one branding step. A failure is logged and printed, and the remaining steps still run."""

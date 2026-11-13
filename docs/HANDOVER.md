@@ -30,8 +30,8 @@ Follow these steps to deploy B-One white-label on a production server:
 
 5. **Optional Site Config Keys**:
    The support portal and email defaults are baked directly into code (`client_theme/boot.py`), so no `site_config.json` keys are required. However, you can optionally override them per site:
-   * `b1_support_email`: Custom support mailbox (defaults to `bcoredigitalservices@gmail.com`)
-   * `b1_support_url`: Custom support portal URL (defaults to `https://bcore.digital/support`)
+   * `b1_support_email`: Custom support mailbox (defaults to `bcoredigitalservices@gmail.com`; currently set to `bcoredigitalservices@gmail.com` in `site_config.json`)
+   * `b1_support_url`: Custom support portal URL (defaults to `https://bcore.digital/support`; currently set to `https://bcore.digital/support` in `site_config.json`)
    * `b1_client_name`: Client name shown in About/Support headers (defaults to `Loyson Groups`)
 
 ---
@@ -52,40 +52,57 @@ The application hooks `after_migrate` in `client_theme/hooks.py` to run `client_
 
 ## 3. Local-Only Database Records (Audit from Development Bench)
 
-The following records exist **only in the local development database** (`client.local`) and will **not** automatically deploy to the server unless explicitly exported or recreated:
+Most of the 144 Property Setters and 12 Custom Fields in the development bench database (`client.local`) are standard records created automatically by Frappe and ERPNext when installed, so a clean new server gets them automatically upon app installation.
 
-| Record Type | Local Count | Deployment Note |
-|---|---|---|
-| **Letter Head** | 2 | Custom local letterheads. Recreate or import if needed on server. |
-| **Print Format (standard = 'No')** | 1 | Custom local print formats. Export as fixtures or recreate on server. |
-| **Email Template** | 1 | Custom local email template. Recreate or import on server. |
-| **Custom Field** | 12 | Site-specific custom fields. |
-| **Property Setter (non-B-One)** | 144 | Site-specific or core custom property setters. (B-One's 23 property setters are applied by code). |
-| **Server Script** | 0 | None present locally. |
-| **Client Script** | 0 | None present locally. |
-| **Custom HTML Block** | 0 | None present locally. |
-| **Web Page** | 0 | None present locally. |
-| **Dashboard Chart (custom)** | 0 | None present locally. |
-| **Number Card (custom)** | 0 | None present locally. |
-| **Custom Role** | 0 | None present locally. |
-| **B-One Settings Tiles** | 11 | Seeded automatically by `seed_tiles()` during first `bench migrate`. |
+Only **4 custom records** in the local database are truly custom local creations:
+
+| Record Type | Record Name | DocType / Purpose | Deployment Status |
+|---|---|---|---|
+| **Letter Head** | `Company Letterhead Report` | Letter Head | Not shipped; recreate manually if the client needs them. |
+| **Letter Head** | `Company Letterhead` | Letter Head | Not shipped; recreate manually if the client needs them. |
+| **Print Format** | `IRS 1099 Form` | Custom Print Format for `Supplier` (`standard = 'No'`) | Not shipped; recreate manually if the client needs them. |
+| **Email Template** | `Dispatch Notification` | Email Template | Not shipped; recreate manually if the client needs them. |
+
+*Note: Server Scripts, Client Scripts, Custom HTML Blocks, Web Pages, Dashboard Charts, Number Cards, and Custom Roles have zero custom local records.*
 
 ---
 
 ## 4. Go-Live Gate (Checklist Section 15 Summary)
 
-Before opening the site to client users, verify the following gates:
+Before opening the site to client users, execute and verify every step of the Section 15 Go-Live Gate:
 
-- [ ] **Brand Scanner**: `bench --site <site> execute client_theme.scan_brand.run` reports only 1 known record (`[ERPNext Integrations]`).
-- [ ] **Console Link Audit**: In browser DevTools console on `/app`, a list view, a form view, and with user avatar menu open, run:
+- [ ] **Developer Mode OFF**: Disable developer mode on the production site so internal development tools and the "For app" layer scope option in Manage Sidebar/Dock do not appear to end users:
+  ```bash
+  bench --site <site_name> set-config developer_mode 0
+  ```
+- [ ] **Outgoing Email Account Configured**: Configure and enable the client's own outgoing `Email Account` with live SMTP host, port, credentials, and SSL/TLS. (Without an active SMTP account, no outgoing emails or password resets will send).
+- [ ] **Credential & Secret Rotation**: Rotate sensitive secrets from development printouts:
+  * Update MariaDB user password (`db_password`) in `site_config.json` and in MariaDB.
+  * Rotate `flow_server_secret` and any temporary API/encryption secrets in `site_config.json`.
+- [ ] **Clean Test Data & Production Admin**:
+  * Purge test transactions, mock customers, and demo vouchers created during testing.
+  * Update `Administrator` user profile with the client's real production contact email.
+- [ ] **Brand Scanner**: Verify database cleanliness:
+  ```bash
+  bench --site <site_name> execute client_theme.scan_brand.run
+  ```
+  Reports only 1 known permitted record (`[ERPNext Integrations]`).
+- [ ] **Console Link Audit**: In browser DevTools console on `/desk`, a list view, a form view, and with user avatar menu open, run:
   ```javascript
   [...document.querySelectorAll('a[href]')].map(a => a.href).filter(h => /frappe|erpnext/i.test(h))
   ```
   Returns `[]` (empty array).
 - [ ] **Manage Sidebar Save**: Open *Edit Sidebar* / *Manage Sidebar*. The layer dropdown shows **"For B-One"**. Reordering items and clicking *Save* completes without errors or hanging.
 - [ ] **Email Masthead & Footer**: Outgoing test email displays an absolute logo URL in the masthead and exactly one line in footer: `Sent by B-One — B-Core Digital Services`.
-- [ ] **Tracebacks Suppressed**: `allow_error_traceback = 0` is active. Staff diagnose errors via the `Error Log` doctype (`/app/error-log`).
+- [ ] **Tracebacks Suppressed**: `allow_error_traceback = 0` is active. Staff diagnose errors via the `Error Log` doctype (`/desk/error-log`).
 - [ ] **Role Permissions Restricted**: Restrict client user roles from accessing the "Business Setup" (ERPNext Settings) workspace and developer tools.
+- [ ] **Backup, Production Build & Restart**:
+  ```bash
+  bench --site <site_name> backup --with-files
+  bench build --app client_theme --production
+  bench restart
+  ```
+- [ ] **Git Commit & Tag**: Ensure repository working directory is clean, changes committed, and tagged (e.g. `b-one-whitelabel-v1`).
 
 ---
 
@@ -99,3 +116,4 @@ Before opening the site to client users, verify the following gates:
 | **DevTools Network Tab** | API endpoints `/api/method/erpnext.*` | Underlying Python RPC routes. Invisible in normal user browsing. |
 | **DevTools Network Tab** | Static assets `/assets/frappe/...`, `/assets/erpnext/...` | Web server static bundle directory paths. Invisible in normal UI. |
 | **Mail Client "Show Original"** | Email header `X-Frappe-Site: client.local` | Standard framework MIME header visible only in raw source headers. Never visible in email body or client header view. |
+

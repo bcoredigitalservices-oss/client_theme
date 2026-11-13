@@ -23,7 +23,7 @@
 					<div class="email-footer">
 						<a href="{{ site_url or '/' }}">
 							{% if brand_logo %}
-							<img class="email-brand-logo" src="{{ brand_logo }}" alt="{{ brand_name or 'B-One' }}" />
+							<img class="email-brand-logo" src="{{ brand_logo if (brand_logo.startswith('http://') or brand_logo.startswith('https://')) else (site_url + brand_logo if site_url else brand_logo) }}" alt="{{ brand_name or 'B-One' }}" />
 							{% elif brand_name %}
 							<span class="email-brand-name">{{ brand_name }}</span>
 							{% else %}

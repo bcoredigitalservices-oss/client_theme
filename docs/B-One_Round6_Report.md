@@ -129,3 +129,4 @@ Expected result on all pages: `[]` (empty list).
 | API paths `/api/method/erpnext.*` | DevTools Network tab | Backend endpoint routes; not visible in UI. |
 | Asset bundles `/assets/frappe/...`, `/assets/erpnext/...` | DevTools Network tab | Static file serving paths. |
 | Email MIME header `X-Frappe-Site` | Mail client "Show original" | Standard framework MIME header; not visible in email body/headers. |
+

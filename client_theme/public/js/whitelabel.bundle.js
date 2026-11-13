@@ -355,8 +355,12 @@
 			frappe.__b1_help_guarded = true;
 			frappe.provide("frappe.help");
 			frappe.help.help_links = new Proxy({}, {
-				get: () => [],
+				get: (target, prop) => (prop in target ? target[prop] : []),
 				set: () => true,
+				has: () => false,
+				ownKeys: () => [],
+				getOwnPropertyDescriptor: () => undefined,
+				deleteProperty: () => true,
 			});
 			return true;
 		} catch (e) {

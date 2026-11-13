@@ -19,7 +19,7 @@
 							<a href="{{ site_url or '/' }}">
 								{% if brand_logo %}
 								<img
-									src="{{ brand_logo }}"
+									src="{{ brand_logo if (brand_logo.startswith('http://') or brand_logo.startswith('https://')) else (site_url + brand_logo if site_url else brand_logo) }}"
 									height="28"
 									class="brand-logo"
 								/>

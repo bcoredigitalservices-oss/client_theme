@@ -7,6 +7,7 @@ import frappe
 VENDOR = "B-Core Digital"
 WEBSITE = "https://bcore.digital"
 SUPPORT_EMAIL = "bcoredigitalservices@gmail.com"
+SUPPORT_URL = "https://bcore.digital/support"
 CLIENT = "Loyson Groups"
 
 
@@ -27,7 +28,7 @@ def _brand():
 		"client": CLIENT,
 		"version": version,
 		"support_email": frappe.conf.get("b1_support_email") or SUPPORT_EMAIL,
-		"support_url": frappe.conf.get("b1_support_url") or "",
+		"support_url": frappe.conf.get("b1_support_url") or SUPPORT_URL,
 	}
 
 

@@ -287,3 +287,8 @@ html body :is(button, input, select, textarea) {
 .body-sidebar .sidebar-header .header-title {
     font-weight: 600;
 }
+
+.promotional-banners,
+.promotional-banner {
+    display: none !important;
+}

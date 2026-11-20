@@ -2,7 +2,9 @@
 .built-with-frappe,
 .frappe-footer,
 footer .text-muted,
-.navbar-brand img {
+.navbar-brand img,
+.promotional-banners,
+.promotional-banner {
 	display: none !important;
 }
 

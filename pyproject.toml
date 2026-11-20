@@ -1,7 +1,7 @@
 [project]
 name = "client_theme"
 authors = [
-    { name = "B-Core Digital", email = "bcoredigitalservices@gmail.com"}
+    { name = "B-Core Digital", email = "support@bcore.digital"}
 ]
 description = "Theme app by B-Core Digital"
 requires-python = ">=3.14"

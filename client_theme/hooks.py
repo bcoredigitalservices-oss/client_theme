@@ -3,7 +3,7 @@ app_title = "B-One"
 app_logo_url = "/assets/client_theme/images/logo-mark-clean.svg"
 app_publisher = "B-Core Digital"
 app_description = "Theme app by B-Core Digital"
-app_email = "bcoredigitalservices@gmail.com"
+app_email = "support@bcore.digital"
 app_license = "mit"
 
 # Send non-GET requests for this app's endpoints as native `application/json`

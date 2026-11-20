@@ -1,14 +1,14 @@
 import frappe
 
 # Brand facts shown in the About and Support dialogs. Override per site without code changes:
-#   bench --site <site> set-config b1_support_email "help@bcore.digital"
+#   bench --site <site> set-config b1_support_email "support@bcore.digital"
 #   bench --site <site> set-config b1_support_url "https://bcore.digital/support"
 # Support mailbox confirmed and final.
 VENDOR = "B-Core Digital"
 WEBSITE = "https://bcore.digital"
-SUPPORT_EMAIL = "bcoredigitalservices@gmail.com"
+SUPPORT_EMAIL = "support@bcore.digital"
 SUPPORT_URL = "https://bcore.digital/support"
-CLIENT = "Loyson Groups"
+CLIENT = "I2 Techno Solutions"
 
 
 def _parse_roles(value):
@@ -25,7 +25,7 @@ def _brand():
 		"name": "B-One",
 		"vendor": VENDOR,
 		"website": WEBSITE,
-		"client": CLIENT,
+		"client": frappe.conf.get("b1_client_name") or CLIENT,
 		"version": version,
 		"support_email": frappe.conf.get("b1_support_email") or SUPPORT_EMAIL,
 		"support_url": frappe.conf.get("b1_support_url") or SUPPORT_URL,

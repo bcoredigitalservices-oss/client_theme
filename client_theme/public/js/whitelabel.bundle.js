@@ -99,7 +99,7 @@
 	// ---- Brand, About and Support (replace the Frappe About dialog and the "Frappe Support" link) ----
 	const BRAND_DEFAULT = {
 		name: "B-One", vendor: "B-Core Digital", website: "https://bcore.digital",
-		client: "", version: "", support_email: "bcoredigitalservices@gmail.com", support_url: "",
+		client: "", version: "", support_email: "support@bcore.digital", support_url: "",
 	};
 	function brand() {
 		return Object.assign({}, BRAND_DEFAULT, (window.frappe && frappe.boot && frappe.boot.b1_brand) || {});
@@ -228,15 +228,38 @@
 
 
 	// ERPNext adds "Switch to Frappe CRM" / "Switch to Helpdesk" promo banners (frappe.io links) to the sidebar.
-	// Empty the list and make later pushes do nothing.
+	// Empty the list, override Frappe v16 Sidebar banner methods, and remove from DOM.
 	function remove_sidebar_ads() {
+		// 1. Support legacy global list (Frappe/ERPNext <= v15)
 		const list = window.frappe && frappe.ui && frappe.ui.sidebar_banners;
-		if (!Array.isArray(list)) return false;
-		list.length = 0;
-		list.push = function () {
-			return 0;
-		};
-		return true;
+		if (Array.isArray(list)) {
+			list.length = 0;
+			list.push = function () {
+				return 0;
+			};
+		}
+
+		// 2. Frappe v16: Sidebar class methods & DOM
+		const S = window.frappe && frappe.ui && frappe.ui.Sidebar;
+		if (S && S.prototype) {
+			if (!S.prototype.__b1_no_ads) {
+				S.prototype.__b1_no_ads = true;
+				S.prototype.get_crm_banner = function () {};
+				S.prototype.get_helpdesk_banner = function () {};
+				S.prototype.render_promotional_banners = function () {
+					if (this.$promotional_banners) {
+						this.$promotional_banners.empty().hide();
+					}
+				};
+			}
+		}
+
+		// Clean up any banner already rendered in the DOM
+		if (window.$) {
+			$(".promotional-banners, .promotional-banner").hide().remove();
+		}
+
+		return Boolean(S && S.prototype);
 	}
 
 	// Frappe never removes body.desktop-page when the SPA leaves the apps screen,

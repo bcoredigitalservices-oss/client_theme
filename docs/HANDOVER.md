@@ -30,9 +30,9 @@ Follow these steps to deploy B-One white-label on a production server:
 
 5. **Optional Site Config Keys**:
    The support portal and email defaults are baked directly into code (`client_theme/boot.py`), so no `site_config.json` keys are required. However, you can optionally override them per site:
-   * `b1_support_email`: Custom support mailbox (defaults to `bcoredigitalservices@gmail.com`; currently set to `bcoredigitalservices@gmail.com` in `site_config.json`)
+   * `b1_support_email`: Custom support mailbox (defaults to `support@bcore.digital`; currently set to `support@bcore.digital` in `site_config.json`)
    * `b1_support_url`: Custom support portal URL (defaults to `https://bcore.digital/support`; currently set to `https://bcore.digital/support` in `site_config.json`)
-   * `b1_client_name`: Client name shown in About/Support headers (defaults to `Loyson Groups`)
+   * `b1_client_name`: Client name shown in About/Support headers (defaults to `I2 Techno Solutions`)
 
 ---
 
